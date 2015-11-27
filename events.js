@@ -45,7 +45,7 @@ var events = {
 				cbs: []
 			};
 		}
-		context = context || window;
+
 		callback = [fn, context, slice.call(arguments, 3)];
 		if (args = listenerList.args) {
 			call(callback, args);
@@ -83,9 +83,11 @@ var events = {
 		}
 		cbs = listenerList.cbs;
 		count = cbs.length;
+
+		ret = emit.apply(this, arguments);
+
 		args = slice.call(arguments, 1);
 		listenerList.args = args;
-		ret = emit.apply(this, arguments);
 		listenerList.cbs = cbs.slice(count);
 	},
 	undo: function (type) {
