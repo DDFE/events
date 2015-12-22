@@ -11,23 +11,21 @@ function call(callback, args) {
 	try {
 		return fn.apply(context, args);
 	} catch (e) {
-		setTimeout(function() {
+		setTimeout(function () {
 			throw e;
 		}, 0);
 	}
 }
 
 function emit(type, args) {
-	var listenerList = _listenerMap[type],
-		cbs, count, index, ret;
+	var listenerList = _listenerMap[type];
 	if (!listenerList)
 		return true;
 	args = slice.call(arguments, 1);
-	cbs = listenerList.cbs;
-	count = cbs.length;
-	index = count;
-	ret = true;
-	while (index--) {
+	var cbs = listenerList.cbs;
+	var count = cbs.length;
+	var ret = true;
+	for (var index = 0; index < count; index++) {
 		if (!cbs[index])
 			continue;
 		ret = call(cbs[index], args) !== false && ret;
