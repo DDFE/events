@@ -17,15 +17,22 @@ function call(callback, args) {
 	}
 }
 
+function arrayClone(arr, len) {
+	var copy = new Array(len);
+	while (len--)
+		copy[len] = arr[len];
+	return copy;
+}
+
 function emit(type, args) {
 	var listenerList = _listenerMap[type];
 	if (!listenerList)
 		return true;
 	args = slice.call(arguments, 1);
-	var cbs = listenerList.cbs;
-	var count = cbs.length;
+	var len = listenerList.cbs.length;
+	var cbs = arrayClone(listenerList.cbs, len);
 	var ret = true;
-	for (var index = 0; index < count; index++) {
+	for (var index = 0; index < len; index++) {
 		if (!cbs[index])
 			continue;
 		ret = call(cbs[index], args) !== false && ret;
@@ -63,7 +70,7 @@ var events = {
 			count = cbs.length;
 			while (count--) {
 				if (cbs[count] && cbs[count][0] === fn) {
-					cbs[count] = undefined;
+					cbs.splice(count, 1);
 				}
 			}
 		}
