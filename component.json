@@ -1,6 +1,6 @@
 {
   "name": "events",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "main": "events.js",
   "description": "事件管理中心，用于全局监听，派发事件"
 }

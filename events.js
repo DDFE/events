@@ -63,7 +63,7 @@ var events = {
 			count = cbs.length;
 			while (count--) {
 				if (cbs[count] && cbs[count][0] === fn) {
-					cbs.splice(count, 1);
+					cbs[count] = undefined;
 				}
 			}
 		}
